@@ -1,0 +1,29 @@
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        stack=[]
+        n=len(temperatures)
+        answer=[-1]*n
+        answer[n-1]=0
+        stack.append(temperatures[n-1])
+        n=n-1
+        for i in range(n-1,-1,-1):
+            if temperatures[i]<stack[-1]:
+                answer[i]=1
+                stack.append(temperatures[i])
+            else:
+                count=1
+                null=[]
+                while stack!=[] and temperatures[i]>=stack[-1]:
+                    null.append(stack[-1])
+                    stack.pop()
+                    count+=1
+                if stack==[]:
+                    answer[i]=0
+                else:
+                    answer[i]=count
+                while null!=[]:
+                    stack.append(null[-1])
+                    null.pop()
+                stack.append(temperatures[i])
+        return answer
+
